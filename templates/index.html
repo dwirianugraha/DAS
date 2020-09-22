@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+	<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-10 col-lg-8 col-sm-10">
+					<br>
+					<br>
+					<h1 class="mb-2">
+						AutoInsurance Fraud Analysis
+					</h1>
+					<h3>
+						Reported Period: Q1 2015
+					</h3>
+					<br>
+				</div>
+			</div>
+			
+		<div class="row">
+			<div class="col-md-4 col-lg-4 col-sm-4">
+				<div class="card card-stats">
+					<div class="card-header">
+						<div class="card-icon">
+							<i></i>
+						</div>
+						<h2 class="card-title">
+							{{ card_data['percent_fraud'] }}
+						</h2>
+						<h4 class="card-category">
+							Fraud Rate
+						</h4>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 col-lg-4 col-sm-4">
+				<div class="card card-stats">
+					<div class="card-header">
+						<div class="card-icon">
+							<i></i>
+						</div>
+						<h2 class="card-title">
+							{{ card_data['average_claim'] }}
+						</h2>
+						<h4 class="card-category">
+							Average Claim Amount
+						</h4>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 col-lg-4 col-sm-4">
+				<div class="card card-stats">
+					<div class="card-header">
+						<div class="card-icon">
+							<i></i>
+						</div>
+						<h2 class="card-title">
+							{{ card_data['fraud_loss'] }}
+						</h2>
+						<h4 class="card-category">
+							Fraud Loss
+						</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 col-lg-12 col-sm-12">
+				<div class="tab">
+					<button class="tablinks" onclick="openTab(event, 'profile') " id="defaultOpen">by Profile
+					</button>
+					<button class="tablinks" onclick="openTab(event, 'report')">by Report
+					</button>
+					<button class="tablinks" onclick="openTab(event, 'Own')">by Claiment Information
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 col-lg-12 col-sm-12">
+				<!-- Tab content -->
+				<div id="profile" class="tabcontent">
+					<br>
+					<h3 style="color: #333333;text-align:center">Fraud Analysis by Customer Profile </h3>
+					<div class="img-container"">
+						{% if funded_plot != None %}
+					  <img src="data:image/png;base64,{{ plot_age_res }}" style="width:46.5%;">
+						{% endif %}
+						{% if funded_plot != None %}
+					  <img src="data:image/png;base64,{{ plot_premium_res }}" style="width:46.5%;">
+						{% endif %}  
+					</div>
+				  </div>	
+
+				<div id="report" class="tabcontent">
+				  <br>
+				  <h3 style="color: #333333;text-align:center">Fraud Analysis by Incident Report</h3>
+				  <div class="img-container">
+				  	{% if funded_plot != None %}
+                    <img src="data:image/png;base64,{{ plot_incident_res }}" style="width:46.5%;">
+					  {% endif %}
+					  {% if funded_plot != None %}
+					<img src="data:image/png;base64,{{ plot_report_res }}" style="width:46.5%;">
+					  {% endif %}  
+				  </div>
+				</div>
+
+				<div id="Own" class="tabcontent">
+					<!-- By Own -->
+					<br>
+					<h3 style="color: #333333;text-align:center">Fraud Analysis by Claiment Report</h3>
+					<div class="img-container">
+					
+					{% if funded_plot != None %}
+					<img src="data:image/png;base64,{{ plot_severity_res }}" style="width:100%;">
+					  {% endif %}
+					
+								<div class="row">
+								<div class="col-md-3 col-lg-3 col-sm-3">
+									<div class="card-header">
+										<h2>
+											{{ card_data['percent_Severity_Major_fraud'] }}
+										</h2>
+										<h6>
+											Kasus Fraud berasal dari Severity Major Damage
+										</h6>
+									</div>
+								</div>
+								<div class="col-md-3 col-lg-3 col-sm-3">
+									<div class="card-header">
+										<h2>
+											{{ card_data['Kontribusi_Fraud'] }}
+										</h2>
+										<h6>
+											Dari keseluruhan Klaim Major Damage adalah Fraud
+										</h6>
+									</div>
+								</div>
+								<div class="col-md-3 col-lg-3 col-sm-3">
+									<div class="card-header">
+										<h2>
+											{{ card_data['Severity_HighRisk'] }}
+										</h2>
+										<h6>
+											Severity yang paling besar mengalami risiko Fraud
+										</h6>
+									</div>
+								</div>
+								<div class="col-md-3 col-lg-3 col-sm-3">
+									<div class="card-header">
+										<h2>
+											{{ card_data['Severity_LowRisk'] }}
+										</h2>
+										<h6>
+											Severity yang paling sedikit mengalami risiko Fraud
+										</h6>
+									</div>
+								</div>
+								</div>
+							
+					  
+					 
+					
+						<table> 
+							<tr>
+								<td style="width:50%;">   
+									{% if funded_plot != None %}
+										<img src="data:image/png;base64,{{ plot_incidenttype_res }}" style="width:90%;">
+									{% endif %}
+								</td>
+								<td style="width:50%;">   
+									{% if funded_plot != None %}
+										<img src="data:image/png;base64,{{ plot_education_res }}" style="width:90%;">
+									{% endif %}
+								</td>
+							</tr>
+						</table>
+							
+						<div class="row">
+							<div class="col-md-3 col-lg-3 col-sm-3">
+								<div class="card-header" style="background-color: #ff3300;">
+									<h2>
+										{{ card_data['Fraud_Property_Damage'] }}
+									</h2>
+									<h6>
+										Kasus Fraud tanpa informasi Property Damage
+									</h6>
+								</div>
+							</div>
+							<div class="col-md-3 col-lg-3 col-sm-3">
+								<div class="card-header" style="background-color: #ff3300;">
+									<h2>
+										Not Info (?)
+									</h2>
+									<h6>
+										Property Damage yang paling besar mengalami risiko Fraud
+									</h6>
+								</div>
+							</div>
+							<div class="col-md-3 col-lg-3 col-sm-3">
+								<div class="card-header" style="background-color: #330066;">
+									<h2>
+										All Education
+									</h2>
+									<h6>
+										Terdapar risiko Fraud pada semua Insured Education Level
+									</h6>
+								</div>
+							</div>
+							<div class="col-md-3 col-lg-3 col-sm-3">
+								<div class="card-header" style="background-color: #330066;">
+									<h2>
+										JD
+									</h2>
+									<h6>
+										Education yang paling besar mengalami risiko Fraud
+									</h6>
+								</div>
+							</div>
+						</div>
+					  
+					  
+					  
+					  
+					  
+					</div>
+					
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+function openTab(evt, idName) {
+	// Declare all variables
+	var i, tabcontent, tablinks;
+
+	// Get all elements with class="tabcontent" and hide them
+	tabcontent = document.getElementsByClassName("tabcontent");
+	for (i = 0; i < tabcontent.length; i++) {
+	tabcontent[i].style.display = "none";
+	}
+
+	// Get all elements with class="tablinks" and remove the class "active"
+	tablinks = document.getElementsByClassName("tablinks");
+	for (i = 0; i < tablinks.length; i++) {
+	tablinks[i].className = tablinks[i].className.replace(" active", "");
+	}
+
+	// Show the current tab, and add an "active" class to the button that opened the tab
+	document.getElementById(idName).style.display = "block";
+	evt.currentTarget.className += " active";
+
+
+	}
+	document.getElementById("defaultOpen").click();	
+</script>
